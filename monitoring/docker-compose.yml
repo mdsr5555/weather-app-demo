@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  weather-app:
+    build: ../weatherapp
+    container_name: weather-app
+    ports:
+      - "5000:80"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - weather-app
