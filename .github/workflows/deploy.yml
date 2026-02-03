@@ -18,7 +18,7 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore weatherapp/weatherapp.csproj
+        run: dotnet restore ./weatherapp/weatherapp.csproj
 
       - name: Build application
         run: dotnet build weatherapp/weatherapp.csproj --configuration Release --no-restore
@@ -37,7 +37,7 @@ jobs:
       - name: Build and push Docker image to ACR
         run: |
           IMAGE_TAG=${{ secrets.ACR_NAME }}.azurecr.io/weather-app:${{ github.sha }}
-          docker build -t $IMAGE_TAG WeatherApp/
+          docker build -t $IMAGE_TAG weatherapp/
           docker push $IMAGE_TAG
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
